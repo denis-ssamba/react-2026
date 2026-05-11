@@ -1,0 +1,69 @@
+<html>
+<body>
+
+<h1 id="hello"> Hello </h1>
+<h1 id="hello1"> Hello Two </h1>
+
+<button onclick="clickB()" > click me </button>
+<p>Document Modal Object</P
+</body>
+</html>
+
+<script>
+
+
+//const student ="Mark";
+
+//const student ="Aaron";
+
+
+
+const  Name =()=>{
+
+const student = {
+id: '01',
+name: 'Bryan',
+age:'21'
+
+}
+
+const name = ["Mark","Bryan","Mathew"]
+
+//const {id,name,age}  = student; // destructing objects
+
+//const [name1,name2,name3] = name; // destructing an array
+
+const otherName = [...name,"paul","pattrick"]
+
+console.log("First array",name);
+console.log("second array",otherName);
+
+// ... spread operator 
+
+
+const studentTwo = {
+...student,
+gender:'Male'
+}
+
+
+console.log("student one",student);
+
+console.log("student two", studentTwo);
+}
+
+
+
+Name();
+//console.log(student);
+
+document.getElementById("hello").innerHTML = "example";
+
+function clickB(){
+console.log("you have clicked");
+alert("you have clicked me");
+}
+
+//console.log(clickButton());
+</script>
+
