@@ -1,6 +1,6 @@
-const Button = ({label , type})=>{
+const Button = ({label , type, onClick,onSubmit})=>{
 
-    return <button type={type}>
+    return <button type={type} onClick={onClick} onSubmit={onSubmit}>
         {label}
     </button>
 }

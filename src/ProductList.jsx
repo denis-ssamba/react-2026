@@ -2,7 +2,7 @@ import React from "react";
 import ProductItem from "./ProductItem";
 import ProductHeader from "./ProductHeader";
 
-const ProductList = ({productData})=>{
+const ProductList = ({productData, setProductData})=>{
 
 
 
@@ -12,7 +12,12 @@ return <>
 <ProductHeader/>
 
 {
-    productData.map((product) => <ProductItem  key={product.id} product = {product} />)   
+    productData.map((product) =>
+     <ProductItem  
+     key={product.id} 
+     product = {product} 
+     productData = {productData} 
+     setProductData={setProductData} />)   
 }
 </ul>
 

@@ -9,11 +9,15 @@ import NameForm from './NameForm'
 import ProductList from "./ProductList"
 import State from './State'
 import ProductForm from './ProductForm'
+import {useState} from "react"
+import ErrorMsg from './ErrorMsg'
+import Button from './Button'
+import SearchBox from './SearchBox'
 
 function App() {
   //const course = "Advanced Web and App development course";
   const credit ="2.5";
-  const productData = [
+  const [productData,setProductData]= useState([
     {
         name:"Lenovo ThinkPad" ,
         color: "Black",
@@ -31,9 +35,22 @@ function App() {
         id: "2"
       }
     
-]
+]);
+
+const [clonePdtData, setClonePdtData] = useState(productData);
+  
+const [isFormOpen, setIsFormOpen]= useState(false)
 
 
+const handleFormOpen = ()=>{
+  setIsFormOpen(true);
+}
+
+const handleSearch = (et)=>{
+ 
+ const filteredPdts =  productData.filter((pdt)=>pdt.name.toLowerCase().includes(et.target.value.toLowerCase()));
+ setProductData(filteredPdts);
+}
   return (
     <div>
       
@@ -46,13 +63,20 @@ function App() {
   
  <Course course="Machine learing " credit="1.0" name="Mathew" marks="75"/>
  <Course course="Python training" credit="2.5" name= "Ayesha" marks="80"/>*/}
-
- <ProductList  productData = {productData}/>
+<Button label="New Product" onClick={handleFormOpen}/>
+<SearchBox  handleChange={handleSearch}/>
+{
+  productData.length > 0 ? <ProductList  productData = {productData} setProductData={setProductData} />  : <ErrorMsg msg="No data found, Please enter new products " />
+}
+ 
 
  {/*<NameForm/>*/}
 
  {/*<State/>*/}
- <ProductForm/>
+ {
+  isFormOpen && <ProductForm productData={productData} setProductData={setProductData}  setIsFormOpen = {setIsFormOpen}/>
+ }
+ 
      </div>
   )
 }

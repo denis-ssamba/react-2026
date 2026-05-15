@@ -1,4 +1,4 @@
-const Input = ({label , type , id , name ,className ,handleChange,value})=>{
+const Input = ({label , type , id , name ,className ,handleChange,value,placeholder})=>{
 
     return <>      
    {label && <label htmlFor={id}>{label}</label>}
@@ -9,6 +9,7 @@ const Input = ({label , type , id , name ,className ,handleChange,value})=>{
   onChange={handleChange}  
   style={{margin:'10px'}}
   value={value}
+  placeholder={placeholder}
   />
   <br/>
 </> 

@@ -2,7 +2,7 @@ import Input from "./Input"
 import Button from "./Button"
 import { useState } from "react"
 
-const ProductForm = ()=>{
+const ProductForm = ({productData, setProductData , setIsFormOpen})=>{
 
     const [productName, setProductName] =useState("");
     const [productColor, setProductColor] =useState("");
@@ -10,7 +10,8 @@ const ProductForm = ()=>{
     const [productDescription, setProductDescription] =useState("");
     const [productPrice, setProductPrice] =useState("100.00");    
 
-    const [product,setProduct] = useState({name:'',color:'',weight:'',description:'',price:'200.00'})
+    const productinitalstate = {name:'',color:'',weight:'',description:'',price:'200.00'}
+    const [product,setProduct] = useState(productinitalstate)
 
     /*const handleProductName = (event)=>{
 
@@ -35,21 +36,44 @@ const ProductForm = ()=>{
         setProductPrice(event.target.value);
     }*/
 
-    const handeChange = (event)=>{
-        //const {id, value} = event.target;
-        console.log(event.target.id);
+    const handeInputChange = (event)=>{
+        const {id, value} = event.target;
+        setProduct({...product,[id]:value})
+        /*setProduct((preState)=>{
+            return {...preState, [id]:value}
+        })*/
+        //console.log(event.target.value);
 
 
     }
 
-    return <form>
+    const handleSave = (event)=>{
+        event.preventDefault();
 
-    <Input label="Product Name"  handleChange={handeChange} value={product.name} id='name' />
-    <Input label="Product Color"  handleChange={handeChange} id='colorx'  value={product.color}/>
-    <Input label="Product Weight"  handleChange={handeChange} id='weight'  value={product.weight} />
-    <Input label="Product Description"  handleChange={handeChange} id ='description'  value={product.description} />
-    <Input label="Product Price"  handleChange={handeChange} id='price' value={product.price} />
-    <Button label="Save" type="submit"/>
+        if(!product.name){
+            alert("Please enter product name");
+            return;
+        }
+        const productWithId = {...product,id:Date.now().toString() } 
+
+        setProductData([...productData,productWithId ])
+        setProduct(productinitalstate)
+        setIsFormOpen(false);
+
+        
+
+    }
+
+
+
+    return <form onSubmit={handleSave} >
+
+    <Input label="Product Name"  handleChange={handeInputChange} value={product.name} id='name' />
+    <Input label="Product Color"  handleChange={handeInputChange} id='color'  value={product.color}/>
+    <Input label="Product Weight"  handleChange={handeInputChange} id='weight'  value={product.weight} />
+    <Input label="Product Description"  handleChange={handeInputChange} id ='description'  value={product.description} />
+    <Input label="Product Price"  handleChange={handeInputChange} id='price' value={product.price} />
+    <Button label="Save" type="submit" />
     </form>
 
 }
