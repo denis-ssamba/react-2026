@@ -2,7 +2,7 @@ import Input from "./Input"
 import Button from "./Button"
 import { useState } from "react"
 
-const ProductForm = ({productData, setProductData , setIsFormOpen})=>{
+const ProductForm = ({productData, setProductData , setIsFormOpen ,  clonePdtData , setClonePdtData})=>{
 
     const [productName, setProductName] =useState("");
     const [productColor, setProductColor] =useState("");
@@ -57,6 +57,8 @@ const ProductForm = ({productData, setProductData , setIsFormOpen})=>{
         const productWithId = {...product,id:Date.now().toString() } 
 
         setProductData([...productData,productWithId ])
+        setClonePdtData([...clonePdtData,productWithId])
+        
         setProduct(productinitalstate)
         setIsFormOpen(false);
 

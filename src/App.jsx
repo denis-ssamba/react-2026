@@ -9,47 +9,60 @@ import NameForm from './NameForm'
 import ProductList from "./ProductList"
 import State from './State'
 import ProductForm from './ProductForm'
-import {useState} from "react"
+import {useState,useEffect} from "react"
 import ErrorMsg from './ErrorMsg'
 import Button from './Button'
 import SearchBox from './SearchBox'
+import axios from 'axios'
+import Loader from './assets/load.gif'
 
 function App() {
   //const course = "Advanced Web and App development course";
   const credit ="2.5";
-  const [productData,setProductData]= useState([
-    {
-        name:"Lenovo ThinkPad" ,
-        color: "Black",
-        weight: "15kg",
-        description:"500GB, 16GB RAM",
-        price: "2500",
-        id: "1"
-    },
-    {
-        name:"HP Pavilion" ,
-        color: "Silver",
-        weight: "10kg", 
-        description:"1TB, 32GB RAM",
-        price: "3500",
-        id: "2"
-      }
-    
-]);
+  const [productData,setProductData]= useState([]);
 
 const [clonePdtData, setClonePdtData] = useState(productData);
   
 const [isFormOpen, setIsFormOpen]= useState(false)
+const [isLoading, setIsLoading] = useState(true);
 
 
 const handleFormOpen = ()=>{
   setIsFormOpen(true);
 }
 
+useEffect(()=>{
+    //console.log("loading");
+
+    // then .catch ...
+
+    const fetchData  = async ()=>{
+
+      try{
+
+      const results = await axios.get("https://dummyjson.com/products");
+      setProductData(results.data.products);
+      setClonePdtData(results.data.products);
+      setIsLoading(false);
+      }catch(error){
+
+      }
+
+    }
+
+    fetchData();
+},[])
+
+
 const handleSearch = (et)=>{
  
- const filteredPdts =  productData.filter((pdt)=>pdt.name.toLowerCase().includes(et.target.value.toLowerCase()));
- setProductData(filteredPdts);
+ const filteredPdts =  productData.filter((pdt)=>pdt.title.toLowerCase().includes(et.target.value.toLowerCase()) 
+ ||  pdt.brand && pdt.brand.toLowerCase().includes(et.target.value.toLowerCase()) 
+ || pdt.description.toLowerCase().includes(et.target.value.toLowerCase())
+
+);
+ //setProductData(filteredPdts);
+ setClonePdtData(filteredPdts);
 }
   return (
     <div>
@@ -66,7 +79,24 @@ const handleSearch = (et)=>{
 <Button label="New Product" onClick={handleFormOpen}/>
 <SearchBox  handleChange={handleSearch}/>
 {
-  productData.length > 0 ? <ProductList  productData = {productData} setProductData={setProductData} />  : <ErrorMsg msg="No data found, Please enter new products " />
+  productData.length > 0 
+  ? 
+
+  /* conditionally rendering loading and product list */
+  <ProductList  
+  productData = {productData} 
+  setProductData={setProductData} 
+  clonePdtData={clonePdtData}
+  setClonePdtData={setClonePdtData}
+  />  
+
+
+
+  : 
+  <><img src={Loader}  alt=" loading image "/>
+   <ErrorMsg msg="No data found, Please enter new products " />
+  </>
+  
 }
  
 
@@ -74,7 +104,14 @@ const handleSearch = (et)=>{
 
  {/*<State/>*/}
  {
-  isFormOpen && <ProductForm productData={productData} setProductData={setProductData}  setIsFormOpen = {setIsFormOpen}/>
+  isFormOpen &&
+  <ProductForm 
+   productData={productData} 
+   setProductData={setProductData}  
+   setIsFormOpen = {setIsFormOpen}
+   clonePdtData={clonePdtData}
+   setClonePdtData={setClonePdtData}
+   />
  }
  
      </div>

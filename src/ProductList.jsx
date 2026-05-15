@@ -2,7 +2,7 @@ import React from "react";
 import ProductItem from "./ProductItem";
 import ProductHeader from "./ProductHeader";
 
-const ProductList = ({productData, setProductData})=>{
+const ProductList = ({productData, setProductData , clonePdtData ,  setClonePdtData})=>{
 
 
 
@@ -12,12 +12,15 @@ return <>
 <ProductHeader/>
 
 {
-    productData.map((product) =>
+    clonePdtData.map((product) =>
      <ProductItem  
      key={product.id} 
      product = {product} 
      productData = {productData} 
-     setProductData={setProductData} />)   
+     setProductData={setProductData}
+     clonePdtData={clonePdtData}
+     setClonePdtData={setClonePdtData}
+     />)   
 }
 </ul>
 
