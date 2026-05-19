@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "./Button";
 
 const ProductItem = (data)=>{
@@ -17,6 +18,9 @@ const ProductItem = (data)=>{
     }
 
  
+    const handleView = ()=>{
+            //navigateTo(/product-details)) // recommended 
+    }
     
     return <div  key ={id}   style={{display:'flex',flexDirection:'row', gap:'1px', border:'1px solid #eee', padding:'3px', marginBottom:'7px'}}>
         
@@ -25,9 +29,11 @@ const ProductItem = (data)=>{
     <li  style={{flex:1}}>{weight}</li>
     <li style={{flex:3}} >{description}</li>
     <li style={{flex:1}} >{price}</li>
-    <li style={{flex:1}} > 
+    <li style={{flex:2}} > 
         <Button label="Remove" type="button" onClick={()=>handleRemove(id) } />&nbsp; &nbsp;
         <Button label="Edit" /> 
+        &nbsp; &nbsp;
+        <Link to ={`/product-details/${id}`}><Button label="View" /> </Link>
     </li>
     </div>
 
